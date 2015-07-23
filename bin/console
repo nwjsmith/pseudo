@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'pseudo'
+require 'irb'
+
+IRB.start
