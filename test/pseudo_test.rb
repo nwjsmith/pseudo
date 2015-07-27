@@ -41,6 +41,7 @@ class PseudoTest < Minitest::Test
     exception = assert_raises(ArgumentError) do
       double.stub_with_raise
     end
+
     assert_equal 'bad argument', exception.message
   end
 
@@ -50,6 +51,16 @@ class PseudoTest < Minitest::Test
 
     yielded = nil
     double.stub_with_yield { |value| yielded = value }
+
     assert_equal 456, yielded
+  end
+
+  def test_mocks_record_received
+    double = Pseudo.new
+    double.stub(:record_it)
+
+    double.record_it
+
+    assert_equal true, double.has_received?(:record_it)
   end
 end

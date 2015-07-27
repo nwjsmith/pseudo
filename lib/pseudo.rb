@@ -2,33 +2,33 @@ require 'pseudo/version'
 
 class Pseudo
   def initialize
-    @stubs = []
+    @stubs = {}
+    @received = []
   end
 
   def stub(name)
-    Stub.new(name).tap { |stub| @stubs << stub }
+    @stubs[name] = Stub.new
   end
 
   def method_missing(symbol, *arguments, &block)
-    if matching_stub = @stubs.find { |stub| stub.name == symbol }
+    if matching_stub = @stubs[symbol]
+      @received << symbol
       matching_stub.act(&block)
     else
       super
     end
   end
 
+  def has_received?(message)
+    @received.include? message
+  end
+
   def respond_to?(symbol, include_private = false)
-    return true if @stubs.any? { |stub| stub.name == symbol }
+    return true if @stubs.has_key?(symbol)
     super
   end
 
   class Stub
-    attr_reader :name
-
-    def initialize(name)
-      @name = name
-    end
-
     def return(value)
       @returns = value
     end
