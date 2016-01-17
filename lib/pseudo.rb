@@ -1,9 +1,36 @@
-require 'pseudo/version'
-
 class Pseudo
-  def initialize
+  overridden_methods = %i(
+    object_id
+    respond_to_missing?
+    ===
+    inspect
+    to_s
+    public_send
+    send
+    to_s
+  )
+
+  overridden_methods.each do |overridden_method|
+    define_method overridden_method do |*arguments, &block|
+      if @stubs.has_key? overridden_method
+        method_missing(overridden_method, *arguments, &block)
+      else
+        super(*arguments, &block)
+      end
+    end
+  end
+
+  instance_methods.each do |instance_method|
+    unless overridden_methods.include?(instance_method) ||
+        instance_method.to_s.start_with?('__')
+      undef_method instance_method
+    end
+  end
+
+  def initialize(name = nil)
+    @name = name
     @stubs = {}
-    @received = []
+    @received = {}
   end
 
   def stub(name)
@@ -12,15 +39,20 @@ class Pseudo
 
   def method_missing(symbol, *arguments, &block)
     if matching_stub = @stubs[symbol]
-      @received << symbol
+      @received[symbol] = arguments
       matching_stub.act(&block)
     else
-      super
+      raise NoMethodError,
+        'unstubbed method %p, expected one of %p' % [symbol, @stubs.keys]
     end
   end
 
   def has_received?(message)
-    @received.include? message
+    @received.include?(message)
+  end
+
+  def has_received_with?(message, *arguments)
+    @received.fetch(message) { return false } == arguments
   end
 
   def respond_to?(symbol, include_private = false)
