@@ -37,9 +37,9 @@ class Pseudo
   end
 
   def method_missing(symbol, *arguments, &block)
-    if matching_stub = @stubs[symbol]
+    if @stubs.has_key?(symbol)
       @received[symbol] = arguments
-      matching_stub.act(&block)
+      @stubs[symbol].act(&block)
     else
       raise NoMethodError,
         'unstubbed method %p, expected one of %p' % [symbol, @stubs.keys]
