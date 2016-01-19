@@ -1,5 +1,9 @@
 # Pseudo
 
+[![Circle CI](https://circleci.com/gh/nwjsmith/pseudo.svg?style=svg)](https://circleci.com/gh/nwjsmith/pseudo)
+[![Code Climate](https://codeclimate.com/github/nwjsmith/pseudo/badges/gpa.svg)](https://codeclimate.com/github/nwjsmith/pseudo)
+[![Test Coverage](https://codeclimate.com/github/nwjsmith/pseudo/badges/coverage.svg)](https://codeclimate.com/github/nwjsmith/pseudo)
+
 Pseudo is very simple test double library that supports only the features which support good mocking practices:
 
 * Stubbing
