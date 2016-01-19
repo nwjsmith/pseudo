@@ -75,6 +75,12 @@ class PseudoTest < Minitest::Test
     assert_equal false, double.has_received_with?(:record_it, :joke)
   end
 
+  def test_keeps_double_underscored_method_definitions
+    double = Pseudo.new
+
+    assert_respond_to double, :__send__
+  end
+
   def test_stubbing_object_id
     double = Pseudo.new
     double.stub(:object_id).return('received object_id')

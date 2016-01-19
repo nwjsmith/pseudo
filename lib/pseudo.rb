@@ -27,8 +27,7 @@ class Pseudo
     end
   end
 
-  def initialize(name = nil)
-    @name = name
+  def initialize
     @stubs = {}
     @received = {}
   end
