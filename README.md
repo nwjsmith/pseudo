@@ -61,3 +61,47 @@ def test_setup_exercise_verify_teardown
   assert_equal false, double.has_received?(:never_called)
 end
 ```
+
+## Requirements
+
+* Ruby 1.9.3+, but you're already on 2.2+, right?
+* Nothing else. No gem dependencies, nothing.
+
+## Installation
+
+The best way to install Pseudo is with RubyGems:
+
+```
+$ [sudo] gem install pseudo
+```
+
+## Contribute
+
+If you'd like to make some changes to Pseudo, start by forking the repo on GitHub:
+
+http://github.com/nwjsmith/pseudo
+
+The best way to get contributions merged into Pseudo:
+
+1. Clone down your fork.
+2. Create a well-named topic branch for your change
+3. Make your change.
+4. Add tests and make sure everything passes (see the section on running the tests below).
+5. If you are adding new functionality, document it in the README.
+6. Do not change the version number.
+7. If necessary, rebase your commits into logical chunks, with no failing commits.
+8. Push the branch to GitHub.
+9. Send a pull request to the nwjsmith/pseudo project.
+
+## Run the tests
+
+``` bash
+$ bundle install
+
+# Run the tests
+$ bundle exec rake test
+```
+
+## License
+
+Pseudo is released under the [MIT License](http://opensource.org/licenses/MIT).
