@@ -61,8 +61,8 @@ def test_setup_exercise_verify_teardown
 
   double.record_it
 
-  assert_equal true, double.has_received?(:record_it)
-  assert_equal false, double.has_received?(:never_called)
+  assert_equal true, double.received?(:record_it)
+  assert_equal false, double.received?(:never_called)
 end
 ```
 
