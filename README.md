@@ -101,8 +101,6 @@ The best way to get contributions merged into Pseudo:
 
 ``` bash
 $ bundle install
-
-# Run the tests
 $ bundle exec rake test
 ```
 
