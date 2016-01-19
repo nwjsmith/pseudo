@@ -5,7 +5,7 @@ require 'pseudo/version'
 
 Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '1.11.2'
-  spec.add_development_dependency 'minitest', '5.7.0'
+  spec.add_development_dependency 'minitest', '5.8.3'
   spec.add_development_dependency 'rake', '10.4.2'
   spec.authors = ['Nate Smith']
   spec.description = 'Pseudo supports stubs and spy-style message expectations.'
