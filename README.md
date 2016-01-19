@@ -68,7 +68,7 @@ end
 
 ## Requirements
 
-* Ruby 1.9.3+, but you're already on 2.2+, right?
+* Ruby 2.0.0+
 * Nothing else. No gem dependencies, nothing.
 
 ## Installation
