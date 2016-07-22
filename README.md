@@ -9,8 +9,6 @@ Pseudo is very simple test double library that supports only the features which 
 * Stubbing
 * Spy-style mocking
 
-## WARNING: Pseudo probably isn't ready for prime time just yet
-
 ## Stubs
 
 Stub a method.
