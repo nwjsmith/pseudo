@@ -2,7 +2,7 @@
 
 # Pseudo a very simple test double that supports stubbing and spies
 class Pseudo
-  overridden_methods = %i(
+  overridden_methods = %i[
     object_id
     respond_to_missing?
     ===
@@ -11,10 +11,17 @@ class Pseudo
     public_send
     send
     to_s
-  )
+  ]
 
   UNSTUBBED_ERROR_MESSAGE = 'unstubbed method %p, expected one of %p'.freeze
   VERY_PRIVATE_METHOD_PREFIX = '__'.freeze
+
+  instance_methods.each do |instance_method|
+    unless overridden_methods.include?(instance_method) ||
+           instance_method.to_s.start_with?(VERY_PRIVATE_METHOD_PREFIX)
+      undef_method instance_method
+    end
+  end
 
   overridden_methods.each do |overridden_method|
     define_method overridden_method do |*arguments, &block|
@@ -23,13 +30,6 @@ class Pseudo
       else
         super(*arguments, &block)
       end
-    end
-  end
-
-  instance_methods.each do |instance_method|
-    unless overridden_methods.include?(instance_method) ||
-           instance_method.to_s.start_with?(VERY_PRIVATE_METHOD_PREFIX)
-      undef_method instance_method
     end
   end
 
@@ -47,8 +47,9 @@ class Pseudo
       @received[symbol] = arguments
       @stubs[symbol].act(&block)
     else
-      fail NoMethodError, Kernel.format(
-        UNSTUBBED_ERROR_MESSAGE, symbol, @stubs.keys)
+      raise NoMethodError, Kernel.format(
+        UNSTUBBED_ERROR_MESSAGE, symbol, @stubs.keys
+      )
     end
   end
 
@@ -81,7 +82,7 @@ class Pseudo
 
     def act
       return @returns if defined? @returns
-      Kernel.fail(*@raises) if defined? @raises
+      Kernel.raise(*@raises) if defined? @raises
       yield(@yields) if defined?(@yields) && block_given?
       nil
     end
