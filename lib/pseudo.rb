@@ -3,12 +3,11 @@
 # Pseudo a very simple test double that supports stubbing and spies
 class Pseudo
   overridden_methods = %i[
-    object_id
-    respond_to_missing?
     ===
     inspect
-    to_s
+    object_id
     public_send
+    respond_to_missing?
     send
     to_s
   ]
